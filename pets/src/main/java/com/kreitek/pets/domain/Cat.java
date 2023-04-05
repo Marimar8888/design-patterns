@@ -1,4 +1,4 @@
-package com.kreitek.pets.domain;
+package main.java.com.kreitek.pets.domain;
 
 public class Cat {
 

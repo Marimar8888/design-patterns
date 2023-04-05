@@ -1,18 +1,26 @@
-package com.kreitek.pets.controllers;
+package main.java.com.kreitek.pets.controllers;
 
-import com.kreitek.pets.Controller;
-import com.kreitek.pets.domain.Cat;
-import com.kreitek.pets.infraestructure.bd.DbService;
+import main.java.com.kreitek.pets.Controller;
+import main.java.com.kreitek.pets.domain.Cat;
+
+import main.java.com.kreitek.pets.infraestructure.bd.DbService;
+import main.java.com.kreitek.pets.infraestructure.Logger;
 
 import java.util.List;
 
 public class CatController implements Controller {
-
-    // TODO Logger declaration
+    //Logger declaration
+    private static Logger logger;
+    //Constructor recibiendo la instancia Logger
+    public CatController(Logger logger){
+        this.logger = logger;
+    }
+    int counter;
 
     @Override
     public String executePut(String petName, String ownerName, String telephone) {
-        // TODO logger.debug("CatController.executePut " + petName + "," + ownerName + "," + telephone);
+        counter = logger.counter;
+        logger.debug("[debug]"+"["+ counter +"]" +"CatController.executePut " + petName + "," + ownerName + "," + telephone);
         Cat cat = new Cat(petName, ownerName, telephone);
         DbService dbService = DbService.getInstance();
         dbService.addNewCat(cat);
@@ -20,8 +28,9 @@ public class CatController implements Controller {
     }
 
     @Override
-    public String executeGet() {
-        // TODO logger.debug("CatController.executeGet CATS");
+    public String executeGet(Logger logger) {
+        counter = logger.counter;
+        logger.debug("[debug]"+"["+ counter +"]" +"CatController.executeGet CATS");
         DbService dbService = DbService.getInstance();
         List<Cat> cats = dbService.getCats();
         String response = "";

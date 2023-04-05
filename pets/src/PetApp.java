@@ -1,18 +1,23 @@
-package com.kreitek.pets;
+import main.java.com.kreitek.pets.BadCommandException;
+import main.java.com.kreitek.pets.Controller;
+import main.java.com.kreitek.pets.controllers.CatController;
+import main.java.com.kreitek.pets.controllers.ControllerFactory;
+import main.java.com.kreitek.pets.controllers.DogController;
+import main.java.com.kreitek.pets.infraestructure.Logger;
 
-import com.kreitek.pets.controllers.CatController;
-import com.kreitek.pets.controllers.ControllerFactory;
-import com.kreitek.pets.controllers.DogController;
 import java.util.Scanner;
+
 
 public class PetApp {
 
-    // TODO Logger declaration
-
+    //Logger declaration
+    static Logger logger = new Logger();
+    static int counter;
     public static void main (String[] args) {
         ControllerFactory controllerFactory = new ControllerFactory();
         boolean end = false;
-        System.out.println("Pet app has been initiated"); // TODO Logger
+        counter = logger.counter;
+        logger.debug("[debug]"+"["+ counter +"]" + "Pet app has been initiated");
         while (!end) {
             String command = waitForNewCommand();
             String[] commandArgs = command.split(":");
@@ -27,11 +32,11 @@ public class PetApp {
                         switch (param) {
                             case "dog":
                                 Controller dogController = controllerFactory.getDogController();
-                                response = dogController.executeGet();
+                                response = dogController.executeGet(logger);
                                 break;
                             case "cat":
                                 Controller catController = controllerFactory.getCatController();
-                                response = catController.executeGet();
+                                response = catController.executeGet(logger);
                                 break;
                             default:
                                 throw new BadCommandException();
@@ -42,11 +47,11 @@ public class PetApp {
                         String[] params = getPutParams(commandArgs);
                         switch (params[0]) {
                             case "dog":
-                                Controller dogController = new DogController();
+                                Controller dogController =  new DogController(logger);
                                 response = dogController.executePut(params[1], params[2], params[3]);
                                 break;
                             case "cat":
-                                Controller catController = new CatController();
+                                Controller catController = new CatController(logger);
                                 response = catController.executePut(params[1], params[2], params[3]);
                                 break;
                             default:
@@ -58,7 +63,8 @@ public class PetApp {
                 System.out.println("Bad command error");
             }
         }
-        System.out.println("Pet app has been ended"); // TODO Logger
+        counter = logger.counter;
+        System.out.println("[debug]"+"["+ counter +"]" +"Pet app has been ended");
     }
 
     private static String getGetParam(String[] commandArgs) throws BadCommandException {
@@ -81,7 +87,7 @@ public class PetApp {
     }
 
     private static String waitForNewCommand() {
-        System.out.print("Enter a command : ");
+        System.out.println("Enter a command : ");
         Scanner scanner = new Scanner(System. in);
         return scanner. nextLine();
     }
