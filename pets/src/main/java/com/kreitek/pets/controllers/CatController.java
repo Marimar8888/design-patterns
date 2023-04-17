@@ -10,12 +10,14 @@ import java.util.List;
 
 public class CatController implements Controller {
     //Logger declaration
-    private static Logger logger;
-    //Constructor recibiendo la instancia Logger
+
+    static int counter;
+    static Logger logger = Logger.getInstance(counter);
+
     public CatController(Logger logger){
         this.logger = logger;
     }
-    int counter;
+
 
     @Override
     public String executePut(String petName, String ownerName, String telephone) {

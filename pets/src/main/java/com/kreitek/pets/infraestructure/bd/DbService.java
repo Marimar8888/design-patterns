@@ -9,10 +9,10 @@ import java.util.List;
 
 public class DbService {
     private static volatile DbService instance = null;
-    static Logger logger = new Logger();
+    static int counter;
+    static Logger logger = Logger.getInstance(counter);
     private List<Cat> cats = new ArrayList<>();
     private List<Dog> dogs = new ArrayList<>();
-    int counter;
 
     private DbService(Logger logger) {
         this.logger=logger;

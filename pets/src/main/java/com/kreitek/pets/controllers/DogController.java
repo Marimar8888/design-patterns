@@ -10,9 +10,9 @@ import java.util.List;
 
 public class DogController implements Controller {
     //Logger declaration
-    private static Logger logger;
-    int counter;
-    //Constructor recibiendo la instancia Logger
+    static int counter;
+    static Logger logger = Logger.getInstance(counter);
+
     public DogController(Logger logger){
         this.logger = logger;
     }

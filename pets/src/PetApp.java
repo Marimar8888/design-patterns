@@ -3,20 +3,22 @@ import main.java.com.kreitek.pets.Controller;
 import main.java.com.kreitek.pets.controllers.CatController;
 import main.java.com.kreitek.pets.controllers.ControllerFactory;
 import main.java.com.kreitek.pets.controllers.DogController;
-import main.java.com.kreitek.pets.infraestructure.Logger;
+
 
 import java.util.Scanner;
 
+import main.java.com.kreitek.pets.infraestructure.Logger;
 
 public class PetApp {
 
     //Logger declaration
-    static Logger logger = new Logger();
     static int counter;
+
     public static void main (String[] args) {
         ControllerFactory controllerFactory = new ControllerFactory();
         boolean end = false;
-        counter = logger.counter;
+        Logger logger = Logger.getInstance(counter);
+ 
         logger.debug("[debug]"+"["+ counter +"]" + "Pet app has been initiated");
         while (!end) {
             String command = waitForNewCommand();

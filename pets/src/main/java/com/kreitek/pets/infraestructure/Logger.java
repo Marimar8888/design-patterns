@@ -1,18 +1,32 @@
 package main.java.com.kreitek.pets.infraestructure;
 
-import main.java.com.kreitek.pets.LoggerController;
-
-public class Logger implements LoggerController {
-
+public class Logger {
+    private static volatile Logger instance;
     public  static int counter=1;
-    private void Logger(int counter){
-        this.counter=counter;
+
+    public Logger(int counter) {
+        this.counter = counter;
     }
-    @Override
+
+    public static Logger getInstance(int counter){
+        Logger result = instance;
+        if(result !=null){
+            return result;
+        }
+        synchronized (Logger.class){
+            if(instance == null){
+                instance = new Logger(counter);
+            }
+            return instance;
+        }
+    }
     public void debug(String message) {
         this.counter++;
         System.out.println(message);
 
+    }
+    public int getCounter(){
+        return counter;
     }
 
 }
